@@ -12,6 +12,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using shortener.Contexts;
 using Microsoft.EntityFrameworkCore;
+using  shortener.Service;
 
 namespace shortener
 {
@@ -31,8 +32,11 @@ namespace shortener
 
             services.AddDbContext<AppDbContext>(options =>
             {
-                options.UseNpgsql("Host=localhost;Database=hospital;Username=postgres;Password='postgres'");
+                options.UseNpgsql("Host=localhost;Database=shortener_url;Username=postgres;Password='postgres'");
             });
+
+            services.AddScoped <UrlMapper>();
+            services.AddScoped <LongUrlFinder>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -43,7 +47,7 @@ namespace shortener
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseHttpsRedirection();
+            //app.UseHttpsRedirection();
 
             app.UseRouting();
 
