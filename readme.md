@@ -21,9 +21,18 @@ dotnet ef database update
 Use the flowing command to run project.
 
 ```bash
+cd .\shortener\
 dotnet run 
 ```
 Now listening on: [http://localhost:5000](http://localhost:5000)
+
+### Run tests
+Use the flowing command to run project.
+
+```bash
+cd .\shortener.test\
+dotnet test
+```
 
 ## Usage
 for create a short url use this curl command: 
@@ -38,6 +47,7 @@ for redirect to long url:
 ```b
 curl --location --request GET "http://localhost:5000/redirect/$ShortUrl" 
 ```
+
 
 ## َAuthors
 created by [MohammadAli Keshavarz](https://github.com/keshavarz13)
