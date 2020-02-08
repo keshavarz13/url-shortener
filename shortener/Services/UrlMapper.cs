@@ -1,5 +1,5 @@
 using shortener.Models;
-using System.Linq; 
+using System.Linq;
 using shortener.Contexts;
 using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
@@ -11,31 +11,33 @@ namespace shortener.Service
     {
         public AppDbContext dbContext { get; set; }
 
-        public UrlMapper (AppDbContext dbContext) { 
+        public UrlMapper(AppDbContext dbContext)
+        {
             this.dbContext = dbContext;
         }
         public UrlResorce setShortUrl(UrlRequest requestModel)
         {
-          
-            string url ;
+
+            string url;
             Task<bool> search;
-            
-            do{
+
+            do
+            {
                 url = ShortUrlCreator.GenerateShortUrl();
                 search = dbContext.Urls.AnyAsync(p => p.ShortUrl == url);
                 search.Wait();
 
-            }while(search.Result);
+            } while (search.Result);
 
 
             UrlResorce shortUrl = new UrlResorce
             {
-                LongUrl = requestModel.LongUrl, 
+                LongUrl = requestModel.LongUrl,
                 ShortUrl = url
-            };      
+            };
 
-            dbContext.Urls.Add(shortUrl); 
-            dbContext.SaveChanges();   
+            dbContext.Urls.Add(shortUrl);
+            dbContext.SaveChanges();
             return shortUrl;
         }
     }

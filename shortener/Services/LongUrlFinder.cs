@@ -1,5 +1,5 @@
 using shortener.Models;
-using System.Linq; 
+using System.Linq;
 using shortener.Contexts;
 using System;
 
@@ -9,16 +9,20 @@ namespace shortener.Service
     {
         public AppDbContext dbContext { get; set; }
 
-        public LongUrlFinder (AppDbContext dbContext) { 
+        public LongUrlFinder(AppDbContext dbContext)
+        {
             this.dbContext = dbContext;
         }
         public string findLongUrl(string shortUrl)
         {
             var result = dbContext.Urls.Any(a => a.ShortUrl == shortUrl);
-            
-            if(result == false ){
+
+            if (result == false)
+            {
                 return "";
-            }else { 
+            }
+            else
+            {
                 return dbContext.Urls.Where(a => a.ShortUrl == shortUrl).Single().LongUrl;
             }
         }
