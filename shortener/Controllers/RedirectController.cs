@@ -1,17 +1,19 @@
 using System;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
-using shortener.Service; 
+using shortener.Service;
 using shortener.Models;
+using System.Web;
 
 namespace shortener.Controllers
 {
     [ApiController]
     [Route("redirect")]
-    public class RedirectController: ControllerBase
+    public class RedirectController : ControllerBase
     {
-        private LongUrlFinder longUrlFinder ; 
-        public RedirectController(LongUrlFinder longUrlFinder){ 
+        private LongUrlFinder longUrlFinder;
+        public RedirectController(LongUrlFinder longUrlFinder)
+        {
             this.longUrlFinder = longUrlFinder;
         }
 
@@ -20,11 +22,14 @@ namespace shortener.Controllers
         public ActionResult Get(string term)
         {
             string longUrl = longUrlFinder.findLongUrl(term);
-            if(longUrl == ""){
+            if (longUrl == "")
+            {
                 return BadRequest();
-            }else{ 
-                return Redirect("https://" + longUrl); 
-            }          
+            }
+            else
+            {
+                return Redirect(HttpUtility.UrlPathEncode(longUrl));
+            }
         }
     }
 }
